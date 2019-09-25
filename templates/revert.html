@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+ <html lang="en">
+
+ <head>
+     <meta charset="utf-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+     <meta name="description" content="">
+     <meta name="author" content="">
+
+     <title>Revert Name Template</title>
+     <!-- Bootstrap -->
+     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}" crossorigin="anonymous">
+     <!-- JQuery -->
+     <script src="{{ url_for('static', filename='jquery-3.4.1.min.js') }}"> </script>
+
+ </head>
+
+ <body>
+
+     <div class="container">
+
+         <form class="form-signin" action="/signUp" method="post" role="form">
+             <h2 class="form-signin-heading">Please enter your Name</h2>
+             <input type="text" name="username" class="form-control" placeholder="Name" required autofocus>
+
+             <button class="btn btn-lg btn-primary btn-block" id="revertNameButton" type="button">Revert </button>
+         </form>
+         <p id="AjaxOutput"></p>
+
+     </div>
+
+ </body>
+<script>
+    $(function() {
+    $('#revertNameButton').click(function() {
+        $.ajax({
+            url: '/revert_name',
+            data: $('form').serialize(),
+            type: 'POST',
+            success: function(response) {
+                var response = JSON.parse(response);
+                console.log(response);
+                $("#AjaxOutput").append('You entered: '+response.user + '<br/>');
+                $("#AjaxOutput").append(response.sampleText + '<br/>');
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    });
+});
+</script>
+
+ </html>
